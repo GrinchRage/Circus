@@ -4,75 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Benvenuto nel Circo 😂</title>
-
+<link rel="preload" as="image" href="https://i.postimg.cc/htyZm0RH/uomo-con-cartello.png">
+<link rel="preload" as="image" href="https://i.postimg.cc/jdvMVh2f/tendone-e-pagliaccio.png">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
-
-body{
-margin:0;
-font-family:'Fredoka One';
-background:linear-gradient(135deg,#fceabb,#f8b500);
-overflow:hidden;
-}
-
-.scene{
-position:absolute;
-width:100%;
-height:100%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-transition:1s;
-opacity:0;
-transform:scale(.8);
-}
-
+body{margin:0;font-family:'Fredoka One',sans-serif;background:linear-gradient(135deg,#fceabb,#f8b500);overflow:hidden;}
+.scene{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;transition:1s;opacity:0;transform:scale(.8);}
 .scene.active{opacity:1;transform:scale(1)}
-
-img{
-max-width:90vw;
-max-height:60vh;
-}
-
-h1{
-color:#e60000;
-font-size:3em;
-margin:20px;
-}
-
-button{
-background:#ffeb3b;
-color:#d32f2f;
-border:none;
-padding:15px 30px;
-border-radius:50px;
-font-size:1.5em;
-cursor:pointer;
-margin-top:20px;
-}
-
-.sign-box{
-display:flex;
-flex-direction:column;
-align-items:center;
-}
-
-.sign-text{
-background:white;
-padding:15px 25px;
-border-radius:15px;
-border:5px solid #ffcc00;
-color:#ff4d4d;
-font-size:1.8em;
-margin-top:20px;
-}
-
+img{max-width:90vw;max-height:60vh;}
+h1{color:#e60000;font-size:3em;margin:20px;}
+button{background:#ffeb3b;color:#d32f2f;border:none;padding:15px 30px;border-radius:50px;font-size:1.5em;cursor:pointer;margin-top:20px;}
+.sign-box{display:flex;flex-direction:column;align-items:center;}
+.sign-text{background:white;padding:15px 25px;border-radius:15px;border:5px solid #ffcc00;color:#ff4d4d;font-size:1.8em;margin-top:20px;}
 iframe{display:none;}
 </style>
 </head>
-
 <body>
 
 <!-- SCENA 1 -->
@@ -91,11 +36,8 @@ iframe{display:none;}
 <button id="restart">Ricomincia</button>
 </div>
 
-<!-- player youtube nascosto -->
-<iframe id="music"
-allow="autoplay"
-src="">
-</iframe>
+<!-- YouTube player visibile piccolino -->
+<iframe id="music" width="1" height="1" src="" allow="autoplay"></iframe>
 
 <script>
 const scene1=document.getElementById('scene1');
@@ -105,19 +47,12 @@ const restart=document.getElementById('restart');
 const music=document.getElementById('music');
 
 next.addEventListener("click",function(){
+  // cambia scena
+  scene1.classList.remove("active");
+  scene2.classList.add("active");
 
-// carica youtube MUTED per bypass autoplay block
-music.src="https://www.youtube.com/embed/lkmZi4GCJas?autoplay=1&mute=1&enablejsapi=1";
-
-// cambia scena
-scene1.classList.remove("active");
-scene2.classList.add("active");
-
-// smuta dopo 2 secondi
-setTimeout(()=>{
-music.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}','*');
-},2000);
-
+  // parte musica YouTube al click (mute non necessario)
+  music.src="https://www.youtube.com/embed/lkmZi4GCJas?autoplay=1";
 });
 
 restart.addEventListener("click",()=>location.reload());

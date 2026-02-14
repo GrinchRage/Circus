@@ -6,100 +6,99 @@
 <title>Benvenuto nel Circo 😂</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
 body{
 margin:0;
-overflow:hidden;
-font-family:'Comic Neue',cursive;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
+font-family:'Fredoka One';
 background:linear-gradient(135deg,#fceabb,#f8b500);
+overflow:hidden;
 }
-
-#app-container{width:100vw;height:100vh;position:relative}
 
 .scene{
-position:absolute;width:100%;height:100%;
-display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-text-align:center;padding:20px;
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
 transition:1s;
-opacity:0;transform:scale(.8) translateY(100%);
-background-size:cover;background-position:center;color:#fff
+opacity:0;
+transform:scale(.8);
 }
 
-.scene.active{opacity:1;transform:scale(1) translateY(0)}
+.scene.active{opacity:1;transform:scale(1)}
+
+img{max-width:90vw;max-height:60vh}
+
+h1{color:#e60000;font-size:3em;margin:20px}
 
 button{
-background:#ffeb3b;color:#d32f2f;border:none;
-padding:15px 30px;border-radius:50px;
-font-size:1.4em;font-family:'Fredoka One';
-cursor:pointer;margin-top:20px
+background:#ffeb3b;
+color:#d32f2f;
+border:none;
+padding:15px 30px;
+border-radius:50px;
+font-size:1.5em;
+cursor:pointer;
+margin-top:20px;
+}
+
+.sign-box{
+position:relative;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
 .sign-text{
-position:absolute;top:50%;left:50%;
-transform:translate(-50%,-50%) rotate(-5deg);
-font-family:'Fredoka One';
-font-size:2em;color:#ff4d4d;
-background:#fff;padding:10px 20px;
-border:5px solid #ffcc00;border-radius:10px
+background:white;
+padding:15px 25px;
+border-radius:15px;
+border:5px solid #ffcc00;
+color:#ff4d4d;
+font-size:1.8em;
+margin-top:20px;
 }
-
-.circus-tent{width:90%;max-width:600px}
 </style>
 </head>
 
 <body>
 
-<div id="app-container">
-
 <!-- SCENA 1 -->
 <div id="scene1" class="scene active">
-<div class="man-holding-sign">
-<img src="https://i.ibb.co/LD8PbPpy/uomo-cartello.png" style="width:80%;max-width:400px;">
-<span class="sign-text">Amo che bella la nuova casa 😂</span>
+<div class="sign-box">
+<img src="https://i.ibb.co/LD8PbPpy/uomo-cartello.png">
+<div class="sign-text">Amo che bella la nuova casa 😂</div>
 </div>
-<button id="next-scene-btn">CLICCA QUI</button>
+<button id="next">CLICCA QUI</button>
 </div>
 
 <!-- SCENA 2 -->
 <div id="scene2" class="scene">
-<img src="https://i.ibb.co/1fj98n7Q/tendone.png" class="circus-tent">
+<img src="https://i.ibb.co/1fj98n7Q/tendone.png">
 <h1>Benvenuto nel circo 😂</h1>
-<button id="restart-btn">Ricomincia</button>
+<button id="restart">Ricomincia</button>
 
-<!-- Player YouTube nascosto -->
-<iframe id="yt-music"
-width="0" height="0"
-src=""
-frameborder="0"
-allow="autoplay"
-allowfullscreen>
-</iframe>
-
-</div>
-
+<iframe id="music" width="0" height="0" allow="autoplay"></iframe>
 </div>
 
 <script>
 const scene1=document.getElementById('scene1');
 const scene2=document.getElementById('scene2');
-const nextBtn=document.getElementById('next-scene-btn');
-const restartBtn=document.getElementById('restart-btn');
-const ytMusic=document.getElementById('yt-music');
+const next=document.getElementById('next');
+const restart=document.getElementById('restart');
+const music=document.getElementById('music');
 
-nextBtn.onclick=()=>{
-// MUSICA DA CIRCO AUTOMATICA
-ytMusic.src="https://www.youtube.com/embed/tZ7aYQtIldg?autoplay=1&mute=0";
+next.onclick=()=>{
+music.src="https://youtu.be/lkmZi4GCJas?si=I4osViFO1atOipPH?autoplay=1";
 scene1.classList.remove('active');
 scene2.classList.add('active');
 }
 
-restartBtn.onclick=()=>location.reload();
+restart.onclick=()=>location.reload();
 </script>
 
 </body>

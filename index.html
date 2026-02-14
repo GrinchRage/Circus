@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto nel Circo della Nuova Casa! 😂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Fredoka+One&display=swap');
+
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars during transitions */
+            font-family: 'Comic Neue', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%); /* Warm, inviting gradient */
+            color: #333;
+        }
+
+        #app-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 1s ease-in-out; /* Bouncy transition */
+            opacity: 0;
+            transform: scale(0.8) translateY(100%);
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        .scene.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Scene 1 Styles */
+        #scene1 {
+            background: linear-gradient(to right top, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); /* Soft pink/orange gradient */
+            color: #333;
+        }
+
+        #scene1 .man-holding-sign {
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 30px;
+            animation: bounceIn 1s ease-out;
+            position: relative; /* For the sign text positioning */
+        }
+
+        #scene1 .sign-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-5deg); /* Slightly tilted */
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(1.5em, 5vw, 2.5em);
+            color: #ff4d4d; /* Bright red */
+            white-space: nowrap;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border: 5px solid #ffcc00;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        button {
+            background-color: #ffeb3b; /* Bright yellow */
+            color: #d32f2f; /* Dark red */
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: clamp(1.2em, 4vw, 1.8em);
+            font-family: 'Fredoka One', cursive;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #ffd600;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Scene 2 Styles */
+        #scene2 {
+            background: linear-gradient(to right top, #84fab0 0%, #8fd3f4 100%); /* Light green/blue gradient */
+            position: relative;
+            overflow: hidden;
+        }
+
+        #scene2 h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2.5em, 8vw, 5em);
+            color: #ff0000; /* Red for circus */
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.3), -4px -4px 8px rgba(255,255,255,0.5);
+            z-index: 10;
+            animation: textBounce 1.5s infinite alternate;
+        }
+
+        #scene2 .circus-elements {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #scene2 .circus-tent {
+            width: 90%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            animation: zoomIn 1s ease-out;
+            position: relative;
+            z-index: 5;
+        }
+
+        #scene2 .funny-clown {
+            position: absolute;
+            width: 30%;
+            max-width: 200px;
+            bottom: 5%; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            animation: floatUpDown 3s ease-in-out infinite, bounceIn 1s ease-out 0.5s;
+            z-index: 6;
+        }
+
+        /* Confetti animation */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            border-radius: 50%;
+            animation: fall 5s infinite;
+            opacity: 0;
+            z-index: 20;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) translateX(50vw) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Keyframe Animations */
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes floatUpDown {
+            0% { transform: translateX(-50%) translateY(20px); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+            100% { transform: translateX(-50%) translateY(20px); }
+        }
+
+        @keyframes textBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            #scene1 .sign-text {
+                font-size: clamp(1.2em, 8vw, 2em);
+                padding: 8px 15px;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: clamp(1em, 3.5vw, 1.5em);
+            }
+            #scene2 h1 {
+                font-size: clamp(2em, 10vw, 4em);
+            }
+            #scene2 .funny-clown {
+                width: 40%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Scene 1: Man with Sign -->
+        <div id="scene1" class="scene active">
+            <div class="man-holding-sign">
+                <!-- Image of a man holding a blank sign -->
+                <img src="https://i.imgur.com/k9S0iLw.png" alt="Happy man holding a sign" style="width:100%; height:auto; display:block;">
+                <span class="sign-text">Amo che bella la nuova casa che ti sei fatt</span>
+            </div>
+            <button id="next-scene-btn">Clicca qui</button>
+        </div>
+
+        <!-- Scene 2: Circus Tent with Clown -->
+        <div id="scene2" class="scene">
+            <div class="circus-elements">
+                <img src="https://i.imgur.com/mO208gV.png" alt="Colorful circus tent" class="circus-tent">
+                <img src="https://i.imgur.com/z4D61Jb.png" alt="Funny clown" class="funny-clown">
+            </div>
+            <h1>Benvenuto nel circo 😂</h1>
+            <button id="restart-btn">Ricomincia</button>
+            <!-- Background Music -->
+            <audio id="circus-music" loop preload="auto">
+                <source src="https://www.soundboard.com/mediafiles/et/et1/et15065440628206869.mp3" type="audio/mpeg">
+                Il tuo browser non supporta l'audio.
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scene1 = document.getElementById('scene1');
+            const scene2 = document.getElementById('scene2');
+            const nextSceneBtn = document.getElementById('next-scene-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const circusMusic = document.getElementById('circus-music');
+            const appContainer = document.getElementById('app-container');
+
+            // Function to create confetti
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                scene2.appendChild(confetti);
+
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
+            }
+
+            // Generate a burst of confetti
+            function generateConfettiBurst() {
+                for (let i = 0; i < 50; i++) {
+                    createConfetti();
+                }
+            }
+
+            nextSceneBtn.addEventListener('click', () => {
+                // Play music on user interaction
+                circusMusic.volume = 0.4; // Set a reasonable volume
+                circusMusic.play().catch(e => console.error("Autoplay prevented:", e));
+
+                scene1.classList.remove('active');
+                // Use a short timeout to allow CSS transition to start before adding scene2
+                setTimeout(() => {
+                    scene2.classList.add('active');
+                    generateConfettiBurst(); // Start confetti when scene 2 appears
+                }, 50); // Small delay
+            });
+
+            restartBtn.addEventListener('click', () => {
+                location.reload(); // Reload the page to restart
+            });
+        });
+    </script>
+</body>
+</html>

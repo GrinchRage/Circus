@@ -31,9 +31,16 @@ transform:scale(.8);
 
 .scene.active{opacity:1;transform:scale(1)}
 
-img{max-width:90vw;max-height:60vh}
+img{
+max-width:90vw;
+max-height:60vh;
+}
 
-h1{color:#e60000;font-size:3em;margin:20px}
+h1{
+color:#e60000;
+font-size:3em;
+margin:20px;
+}
 
 button{
 background:#ffeb3b;
@@ -47,7 +54,6 @@ margin-top:20px;
 }
 
 .sign-box{
-position:relative;
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -62,6 +68,8 @@ color:#ff4d4d;
 font-size:1.8em;
 margin-top:20px;
 }
+
+iframe{display:none;}
 </style>
 </head>
 
@@ -70,7 +78,7 @@ margin-top:20px;
 <!-- SCENA 1 -->
 <div id="scene1" class="scene active">
 <div class="sign-box">
-<img src="https://i.ibb.co/LD8PbPpy">
+<img src="https://i.postimg.cc/htyZm0RH/uomo-con-cartello.png">
 <div class="sign-text">Amo che bella la nuova casa 😂</div>
 </div>
 <button id="next">CLICCA QUI</button>
@@ -78,12 +86,16 @@ margin-top:20px;
 
 <!-- SCENA 2 -->
 <div id="scene2" class="scene">
-<img src="https://i.ibb.co/1fj98n7Q">
+<img src="https://i.postimg.cc/jdvMVh2f/tendone-e-pagliaccio.png">
 <h1>Benvenuto nel circo 😂</h1>
 <button id="restart">Ricomincia</button>
-
-<iframe id="music" width="0" height="0" allow="autoplay"></iframe>
 </div>
+
+<!-- player youtube nascosto -->
+<iframe id="music"
+allow="autoplay"
+src="">
+</iframe>
 
 <script>
 const scene1=document.getElementById('scene1');
@@ -92,13 +104,23 @@ const next=document.getElementById('next');
 const restart=document.getElementById('restart');
 const music=document.getElementById('music');
 
-next.onclick=()=>{
-music.src="https://www.youtube.com/embed/lkmZi4GCJas?autoplay=1";
-scene1.classList.remove('active');
-scene2.classList.add('active');
-}
+next.addEventListener("click",function(){
 
-restart.onclick=()=>location.reload();
+// carica youtube MUTED per bypass autoplay block
+music.src="https://www.youtube.com/embed/lkmZi4GCJas?autoplay=1&mute=1&enablejsapi=1";
+
+// cambia scena
+scene1.classList.remove("active");
+scene2.classList.add("active");
+
+// smuta dopo 2 secondi
+setTimeout(()=>{
+music.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}','*');
+},2000);
+
+});
+
+restart.addEventListener("click",()=>location.reload());
 </script>
 
 </body>
